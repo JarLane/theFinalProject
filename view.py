@@ -3,12 +3,7 @@ from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
 
-#gfile = ''
-# create the root window
-root = Tk()
-root.title('Sound data modeling final')
-root.resizable(False, False)
-root.geometry('300x150')
+
 '''
 tkinter.filedialog.askopenfilenames(**options)
 Create an Open dialog and
@@ -16,23 +11,52 @@ return the selected filename(s) that correspond to
 existing file(s).
 screenshot
 '''
-class View:
-    def __init__(self, data=None):
-        self.root = root
+class View(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        gfile = ''
+        # create the root window
+        self.root = Tk()
+        self.root.title('Sound data modeling final')
+        self.root.resizable(False, False)
+        self.root.geometry('300x150')
+    #def __init__(self, data=None):
+        #self.root = root
         self.gfile = ''
+
+    def set_controller(self, controller):
+        """
+        Set the controller
+        :param controller:
+        :return:
+        """
+
+        self.controller = controller
     def select_file(self):
         filetypes = (('wav files', '*.wav'),('All files', '*.*'))
         filename = fd.askopenfilename(title='Open a file',initialdir='/',filetypes=filetypes)
         gfile = filename
         # tkinter.messagebox — Tkinter message prompts
         showinfo(title='Selected File',message=filename)
-        gfile_label = ttk.Label(root, text=gfile)
+        gfile_label = ttk.Label(self.root, text=gfile)
         gfile_label.pack(side="bottom")
+        open_button = ttk.Button(self.root, text='Open a File', command=View.select_file)
         open_button.pack(expand=True)
+
         # run the application
-        root.mainloop()
+        self.root.mainloop()
     # open button
-open_button = ttk.Button(root,text='Open a File',command=View.select_file)
+        def save_button_clicked(self):
+            """
+            Handle button click event
+            :return:
+            """
+
+        if self.controller:
+            self.controller.save(self.get())
+
+#open_button = ttk.Button(root,text='Open a File',command=View.select_file)
+
 '''
 import scipy.io
 from scipy.io import wavfile

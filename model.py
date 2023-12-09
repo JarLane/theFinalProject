@@ -5,17 +5,16 @@ from pydub.playback import play
 
 
 class Model:
-    def __init__(self, data=None):
-        pass
-
+    def __init__(self, sound=None):
+        self.__sound = sound  # Initialize sound as None
     @property
     def sound(self):
         return self.__sound
 
     @sound.setter
     def sound(self, value):
-        pattern = r'\.wav$'  # Match file extension ".wav" at the end
-
+        self.__sound = value  # Set the sound property directly
+        pattern = r'\.wav$'
         if re.fullmatch(pattern, value):
             self.__sound = value
         else:
@@ -37,5 +36,7 @@ class Model:
             print(channel_count)
 
     def save(self, input_file, output_file):
-        audio = AudioSegment.from_file(input_file, format="wav")
-        audio.export(output_file, format="wav")
+        sound = AudioSegment.from_file(input_file, format="wav")
+        sound.export(output_file, format="wav")
+        #return sound
+
