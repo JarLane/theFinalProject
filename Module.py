@@ -1,7 +1,7 @@
-# Module.py
 import wave
 import numpy as np
 from pydub import AudioSegment
+import os
 
 
 def analyze_wav(file_path):
@@ -12,7 +12,7 @@ def analyze_wav(file_path):
             file_path = converted_file_path
         else:
             print("Error converting file to .wav.")
-            return None, None
+            return None, None, None
 
     with wave.open(file_path, 'rb') as wav_file:
         framerate = wav_file.getframerate()
@@ -23,7 +23,15 @@ def analyze_wav(file_path):
         frequencies = np.fft.fft(signal)
         frequencies = np.abs(frequencies)[:len(frequencies) // 2]
 
-    return duration, frequencies
+        # Split frequencies into low, mid, and high sections
+        low_freq_cutoff = 100  # Adjust as needed
+        high_freq_cutoff = 1000  # Adjust as needed
+
+        low_frequencies = frequencies[:low_freq_cutoff]
+        mid_frequencies = frequencies[low_freq_cutoff:high_freq_cutoff]
+        high_frequencies = frequencies[high_freq_cutoff:]
+
+    return duration, low_frequencies, mid_frequencies, high_frequencies
 
 
 def convert_to_wav(input_file):
