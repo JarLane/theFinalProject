@@ -7,7 +7,7 @@ name = "theFinalProject"
 version = "1.4.2"
 authors = [
   { name="Hunter Mathews", email="hmathews3817@floridapoly.edu"
-    name="Steven Steege", email="ssteege3654@floridapoly.edu"
+    name="Stephen Steege", email="ssteege3654@floridapoly.edu"
     name="Jarrett Lane", email="jlane3113@floridapoly.edu" },
 ]
 description = "Final project that calculates sound"
